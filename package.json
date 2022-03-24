@@ -1,0 +1,20 @@
+{
+  "name": "be-studio-ghibli-tracker",
+  "version": "1.0.0",
+  "description": "Studio Ghibli Tracker is a web application that allows us to view the catalog of films produced by Studio Ghibli, as well as register a personal rating and keep track of which ones you have already seen and which ones you have not yet. ## Conig-envirement --- The envirement is created in Nest.js using Node.js. ## Built With The next thecnologies were added to build and run this project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/C10-Ghibli-s/BE-Studio-Ghibli-Tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/C10-Ghibli-s/BE-Studio-Ghibli-Tracker/issues"
+  },
+  "homepage": "https://github.com/C10-Ghibli-s/BE-Studio-Ghibli-Tracker#readme"
+}
