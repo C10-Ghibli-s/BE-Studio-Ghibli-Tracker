@@ -1,5 +1,0 @@
-*.log
-build/
-temp.*
-node_modules
-notes.md
