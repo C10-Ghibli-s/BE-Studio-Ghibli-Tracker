@@ -14,17 +14,6 @@ export class CreateMovieDto {
 
   @IsString()
   readonly releaseDate: string;
-
-  readonly title: { id: number; originalTitle: string; romajiTitle: string };
-  readonly writers: { id: number; name: string };
-  readonly directors: { id: number; name: string };
-  readonly mucisians: { id: number; name: string };
-  readonly score: {
-    id: number;
-    scoreByEmoji: string;
-    scoreByStars: number;
-    audienceScore: number;
-  };
 }
 
 export class UpdateMovieDto extends PartialType(CreateMovieDto) {}
