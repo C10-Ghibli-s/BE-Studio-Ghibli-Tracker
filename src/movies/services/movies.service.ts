@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 import { Movie } from './../entities/movie.entity';
+import { UpdateMovieDto } from './../dtos/movie.dto';
 
 @Injectable()
 export class MoviesService {
-  private counterId = 1;
   private movies: Movie[] = [
     {
       id: 1,
@@ -71,7 +71,7 @@ export class MoviesService {
     return movie;
   }
 
-  update(id: number, changes: any) {
+  update(id: number, changes: UpdateMovieDto) {
     const movie = this.getOne(id);
     const index = this.movies.findIndex((item) => item.id === id);
     this.movies[index] = {

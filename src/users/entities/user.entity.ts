@@ -1,6 +1,6 @@
 export class User {
   id: number;
-  profilePicture: string;
+  profilePicture?: string;
   password: string;
   email?: string;
   nickname: string;

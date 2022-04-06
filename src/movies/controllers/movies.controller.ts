@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 
 import { MoviesService } from './../services/movies.service';
+import { UpdateMovieDto } from './../dtos/movie.dto';
 
 @Controller('movies')
 export class MoviesController {
@@ -24,7 +25,7 @@ export class MoviesController {
   }
 
   @Put(':movieId/update')
-  update(@Param('movieId') movieId: string, @Body() payload: any) {
+  update(@Param('movieId') movieId: string, @Body() payload: UpdateMovieDto) {
     return this.moviesService.update(+movieId, payload);
   }
 }
