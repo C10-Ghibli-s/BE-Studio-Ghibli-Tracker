@@ -11,7 +11,19 @@ import { WritersService } from './services/writers.service';
 import { TitlesService } from './services/titles.service';
 
 @Module({
-  controllers: [MoviesController, TitlesController, WritersController, DirectorsController, MusiciansController],
-  providers: [MoviesService, MusiciansService, DirectorsService, WritersService, TitlesService],
+  controllers: [
+    MoviesController,
+    TitlesController,
+    WritersController,
+    DirectorsController,
+    MusiciansController,
+  ],
+  providers: [
+    MoviesService,
+    MusiciansService,
+    DirectorsService,
+    WritersService,
+    TitlesService,
+  ],
 })
 export class MoviesModule {}
