@@ -1,10 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 
 import { User } from './../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from './../dtos/user.dto';
+import { Client } from 'pg';
 
 @Injectable()
 export class UsersService {
+  constructor(@Inject('PG') private clientPg: Client) {}
   private counterId = 3;
   private users: User[] = [
     {
@@ -65,5 +67,16 @@ export class UsersService {
       ...data,
     };
     return this.users[index];
+  }
+
+  allTasks() {
+    return new Promise((resolve, reject) => {
+      this.clientPg.query('SELECT * FROM tasks', (err, res) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(res.rows);
+      });
+    });
   }
 }

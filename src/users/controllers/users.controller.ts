@@ -37,4 +37,9 @@ export class UsersController {
   update(@Param('userId') userId: string, @Body() payload: UpdateUserDto) {
     return this.usersService.update(+userId, payload);
   }
+
+  @Get('tasks')
+  getAllTasks() {
+    return this.usersService.allTasks();
+  }
 }
