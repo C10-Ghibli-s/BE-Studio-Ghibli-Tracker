@@ -1,4 +1,4 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 import { IsString, IsDecimal } from 'class-validator';
 
 export class CreateScoreDto {

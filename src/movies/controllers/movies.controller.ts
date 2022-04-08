@@ -9,7 +9,9 @@ import {
 
 import { MoviesService } from './../services/movies.service';
 import { UpdateMovieDto } from './../dtos/movie.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Movies')
 @Controller('movies')
 export class MoviesController {
   constructor(private moviesService: MoviesService) {}

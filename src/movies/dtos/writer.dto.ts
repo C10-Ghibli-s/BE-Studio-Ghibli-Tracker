@@ -1,6 +1,5 @@
 import { IsString } from 'class-validator';
-import { PartialType } from '@nestjs/mapped-types';
-
+import { PartialType } from '@nestjs/swagger';
 export class CreateWriterDto {
   @IsString()
   readonly name: string;
