@@ -8,7 +8,8 @@ import { UsersModule } from './users/users.module';
 import { MoviesModule } from './movies/movies.module';
 import { DatabaseModule } from './database/database.module';
 import { environments } from './environments';
-import config from './config';
+import config from './configs/config';
+import configShema from './configs/configShema';
 
 @Module({
   imports: [
@@ -19,11 +20,7 @@ import config from './config';
       envFilePath: environments[process.env.NODE_ENV] || '.env',
       load: [config],
       isGlobal: true,
-      validationSchema: Joi.object({
-        API_KEY: Joi.string().required(),
-        DATABASE_NAME: Joi.string().required(),
-        DATABASE_PORT: Joi.number().required(),
-      }),
+      validationSchema: configShema,
     }),
   ],
   controllers: [AppController],

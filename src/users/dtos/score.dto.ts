@@ -1,14 +1,17 @@
-import { PartialType } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsString, IsDecimal } from 'class-validator';
 
 export class CreateScoreDto {
   @IsString()
+  @ApiProperty()
   readonly scoreByEmoji: string;
 
   @IsDecimal()
-  readonly scoreByStars: number;
+  @ApiProperty()
+  readonly scoreByStar: number;
 
   @IsDecimal()
+  @ApiProperty()
   readonly audienceScore: number;
 }
 
