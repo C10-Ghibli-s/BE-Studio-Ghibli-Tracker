@@ -1,53 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { Movie } from './../entities/movie.entity';
-import { UpdateMovieDto } from './../dtos/movie.dto';
+import { CreateMovieDto, UpdateMovieDto } from './../dtos/movie.dto';
 
 @Injectable()
 export class MoviesService {
-  private movies: Movie[] = [
-    {
-      id: 1,
-      seenMark: 'check',
-      linkWiki: 'dofahf',
-      duration: 60,
-      releaseDate: '01/02/2020',
-    },
-    {
-      id: 2,
-      seenMark: 'no-check',
-      linkWiki: 'djfoqf',
-      duration: 120,
-      releaseDate: '01/12/2021',
-    },
-    {
-      id: 3,
-      seenMark: 'check',
-      linkWiki: 'youtube-pazos',
-      duration: 140,
-      releaseDate: '25/05/2022',
-    },
-  ];
+  constructor(@InjectRepository(Movie) private movieRepo: Repository<Movie>) {}
 
   findAll() {
-    return this.movies;
+    return this.movieRepo.find();
   }
 
-  getOne(id: number) {
-    const movie = this.movies.find((item) => item.id === id);
+  async getOne(id: number) {
+    const movie = await this.movieRepo.findOne(id);
     if (!movie) {
-      throw new Error(`The mvie with #${id} id is not found`);
+      throw new NotFoundException(`The mvie with #${id} id is not found`);
     }
     return movie;
   }
 
-  update(id: number, changes: UpdateMovieDto) {
-    const movie = this.getOne(id);
-    const index = this.movies.findIndex((item) => item.id === id);
-    this.movies[index] = {
-      ...movie,
-      ...changes,
-    };
-    return this.movies[index];
+  create(data: CreateMovieDto) {
+    const newMovie = this.movieRepo.create(data);
+    return this.movieRepo.save(newMovie);
+  }
+
+  async update(id: number, data: UpdateMovieDto) {
+    const movie = await this.movieRepo.findOne(id);
+    this.movieRepo.merge(movie, data);
+    return this.movieRepo.save(movie);
+  }
+
+  deleteMovie(id: number) {
+    return this.movieRepo.delete(id);
   }
 }
