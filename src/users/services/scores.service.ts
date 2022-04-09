@@ -4,10 +4,14 @@ import { Repository } from 'typeorm';
 
 import { CreateScoreDto, UpdateScoreDto } from './../dtos/score.dto';
 import { Score } from './../entities/score.entity';
+import { MoviesService } from './../../movies/services/movies.service';
 
 @Injectable()
 export class ScoresService {
-  constructor(@InjectRepository(Score) private scoreRepo: Repository<Score>) {}
+  constructor(
+    @InjectRepository(Score) private scoreRepo: Repository<Score>,
+    private moviesService: MoviesService,
+  ) {}
 
   findAll() {
     return this.scoreRepo.find();
@@ -21,8 +25,12 @@ export class ScoresService {
     return score;
   }
 
-  create(data: CreateScoreDto) {
+  async create(data: CreateScoreDto) {
     const newScore = this.scoreRepo.create(data);
+    if (data.movieId) {
+      const movie = await this.moviesService.getOne(data.movieId);
+      newScore.movie = movie;
+    }
     return this.scoreRepo.save(newScore);
   }
 

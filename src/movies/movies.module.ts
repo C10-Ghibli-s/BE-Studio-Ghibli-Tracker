@@ -35,5 +35,6 @@ import { Musician } from './entities/musician.entity';
     WritersService,
     TitlesService,
   ],
+  exports: [MoviesService],
 })
 export class MoviesModule {}

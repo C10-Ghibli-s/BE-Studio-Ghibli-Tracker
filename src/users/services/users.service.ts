@@ -5,16 +5,22 @@ import { Repository } from 'typeorm';
 import { User } from './../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from './../dtos/user.dto';
 import { Client } from 'pg';
+import { ScoresService } from './scores.service';
+import { MoviesService } from './../../movies/services/movies.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject('PG') private clientPg: Client,
     @InjectRepository(User) private userRepo: Repository<User>,
+    private scoreService: ScoresService,
+    private moviesService: MoviesService,
   ) {}
 
   findAll() {
-    return this.userRepo.find();
+    return this.userRepo.find({
+      relations: ['movie'],
+    });
   }
 
   async getProfile(id: number) {
@@ -25,8 +31,16 @@ export class UsersService {
     return user;
   }
 
-  create(data: CreateUserDto) {
+  async create(data: CreateUserDto) {
     const newUser = this.userRepo.create(data);
+    if (data.scoreId) {
+      const score = await this.scoreService.getOne(data.scoreId);
+      newUser.score = score;
+    }
+    if (data.movieId) {
+      const movie = await this.moviesService.getOne(data.movieId);
+      newUser.movie = movie;
+    }
     return this.userRepo.save(newUser);
   }
 
