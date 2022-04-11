@@ -1,5 +1,5 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsString, IsDecimal } from 'class-validator';
+import { IsString, IsDecimal, IsPositive } from 'class-validator';
 
 export class CreateScoreDto {
   @IsString()
@@ -13,6 +13,10 @@ export class CreateScoreDto {
   @IsDecimal()
   @ApiProperty()
   readonly audienceScore: number;
+
+  @IsPositive()
+  @ApiProperty()
+  readonly movieId: number;
 }
 
 export class UpdateScoreDto extends PartialType(CreateScoreDto) {}

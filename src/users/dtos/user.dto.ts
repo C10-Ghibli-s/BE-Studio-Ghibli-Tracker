@@ -6,6 +6,7 @@ import {
   Length,
   IsUrl,
   IsOptional,
+  IsPositive,
 } from 'class-validator';
 
 import { PartialType, ApiProperty } from '@nestjs/swagger';
@@ -47,6 +48,15 @@ export class CreateUserDto {
   @IsNumber()
   @ApiProperty()
   readonly movieWatched: number;
+
+  @IsPositive()
+  @ApiProperty()
+  @IsOptional()
+  readonly scoreId: number;
+
+  @IsPositive()
+  @ApiProperty()
+  readonly movieId: number;
 }
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {}

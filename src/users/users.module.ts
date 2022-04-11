@@ -8,8 +8,10 @@ import { ScoresController } from './controllers/scores.controller';
 import { ScoresService } from './services/scores.service';
 import { Score } from './entities/score.entity';
 
+import { MoviesModule } from './../movies/movies.module';
+
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Score])],
+  imports: [MoviesModule, TypeOrmModule.forFeature([User, Score])],
   controllers: [UsersController, ScoresController],
   providers: [UsersService, ScoresService],
 })

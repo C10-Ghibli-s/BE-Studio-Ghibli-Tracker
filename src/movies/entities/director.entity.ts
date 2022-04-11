@@ -1,10 +1,39 @@
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import { Exclude } from 'class-transformer';
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToMany,
+} from 'typeorm';
 
-@Entity()
+import { Movie } from './movie.entity';
+
+@Entity({ name: 'directors' })
 export class Director {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'varchar', unique: true })
   name: string;
+
+  @CreateDateColumn({
+    name: 'create_at',
+    type: 'timestamp with time zone',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Exclude()
+  createAt: Date;
+
+  @UpdateDateColumn({
+    name: 'update_at',
+    type: 'timestamp with time zone',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Exclude()
+  updateAt: Date;
+
+  @ManyToMany(() => Movie, (movie) => movie.directors)
+  movies: Movie[];
 }

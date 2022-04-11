@@ -1,4 +1,11 @@
-import { IsString, IsNumber, IsUrl } from 'class-validator';
+import {
+  IsString,
+  IsNumber,
+  IsUrl,
+  IsPositive,
+  IsNotEmpty,
+  IsArray,
+} from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class CreateMovieDto {
@@ -18,6 +25,25 @@ export class CreateMovieDto {
   @IsString()
   @ApiProperty()
   readonly releaseDate: string;
+
+  @IsPositive()
+  @ApiProperty()
+  readonly titleId: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsArray()
+  readonly directorsIds: number[];
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsArray()
+  readonly writersIds: number[];
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsArray()
+  readonly musiciansIds: number[];
 }
 
 export class UpdateMovieDto extends PartialType(CreateMovieDto) {}
