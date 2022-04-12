@@ -7,7 +7,7 @@ module.exports = {
   migrations: ['dist/**/migrations/*.ts'],
   migrationsTableName: 'migrations',
   cli: {
-    migrationsDir: 'src/database/migrations',
+    migrationsDir: 'dist/**/migrations',
   },
   ssl: {
     rejectUnauthorized: false,
