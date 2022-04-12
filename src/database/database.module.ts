@@ -14,6 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         return {
           type: 'postgres',
           url: configService.postgresUrl,
+          entities: ['dist/**/*.entity{.ts,.js}'],
           synchronize: false,
           autoLoadEntities: true,
           ssl: {
