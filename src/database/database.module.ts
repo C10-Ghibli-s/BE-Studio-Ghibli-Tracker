@@ -13,13 +13,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         const { user, host, dbName, password, port } = configService.postgres;
         return {
           type: 'postgres',
-          host,
-          port,
-          username: user,
-          password,
-          database: dbName,
+          url: configService.postgresUrl,
           synchronize: false,
           autoLoadEntities: true,
+          ssl: {
+            rejectUnauthorized: false,
+          },
         };
       },
     }),
@@ -28,13 +27,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     {
       provide: 'PG',
       useFactory: (configService: ConfigType<typeof config>) => {
-        const { user, host, dbName, password, port } = configService.postgres;
         const client = new Client({
-          user,
-          host,
-          database: dbName,
-          password,
-          port,
+          connectionString: configService.postgresUrl,
+          ssl: {
+            rejectUnauthorized: false,
+          },
         });
         client.connect();
         return client;

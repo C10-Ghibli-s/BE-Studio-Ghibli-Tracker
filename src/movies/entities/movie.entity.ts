@@ -27,9 +27,9 @@ export class Movie {
 
   @Column({
     name: 'seen_mark',
-    type: 'varchar',
+    type: 'boolean',
   })
-  seenMark: string;
+  seenMark: boolean;
 
   @Column({
     name: 'link_wiki',
