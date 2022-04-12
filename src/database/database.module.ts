@@ -30,7 +30,9 @@ import { getSsl } from 'src/common/helpers/get-ssl';
         const ssl = getSsl();
         const client = new Client({
           connectionString: configService.postgresUrl,
-          ssl,
+          ssl: {
+            rejectUnauthorized: false,
+          },
         });
         client.connect();
         return client;
