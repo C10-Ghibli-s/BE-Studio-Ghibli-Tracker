@@ -27,11 +27,6 @@ export class MusiciansController {
     return this.musicianService.getOne(musicianId);
   }
 
-  @Get(':movieId')
-  showAMovie(@Param('movieId', ParseIntPipe) movieId: number) {
-    return this.musicianService.getOne(movieId);
-  }
-
   @Post()
   create(@Body() payload: CreateMusicianDto) {
     return this.musicianService.create(payload);
