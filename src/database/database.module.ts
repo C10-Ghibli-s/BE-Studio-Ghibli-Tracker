@@ -27,7 +27,6 @@ import { getSsl } from 'src/common/helpers/get-ssl';
     {
       provide: 'PG',
       useFactory: (configService: ConfigType<typeof config>) => {
-        const ssl = getSsl();
         const client = new Client({
           connectionString: configService.postgresUrl,
           ssl: {

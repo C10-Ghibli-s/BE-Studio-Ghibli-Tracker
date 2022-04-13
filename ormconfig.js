@@ -3,7 +3,7 @@ module.exports = {
   url: process.env.DATABASE_URL,
   synchronize: false,
   loggin: false,
-  entities: ['dist/**/*.entity.ts'],
+  entities: ['dist/**/*.entity{.ts, .js}'],
   migrations: ['dist/**/migrations/*.ts'],
   migrationsTableName: 'migrations',
   cli: {
