@@ -14,5 +14,6 @@ import { MoviesModule } from './../movies/movies.module';
   imports: [MoviesModule, TypeOrmModule.forFeature([User, Score])],
   controllers: [UsersController, ScoresController],
   providers: [UsersService, ScoresService],
+  exports: [UsersService],
 })
 export class UsersModule {}

@@ -7,12 +7,16 @@ import {
   Put,
   ParseIntPipe,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 
 import { UsersService } from './../services/users.service';
 import { CreateUserDto, UpdateUserDto } from './../dtos/user.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
+import { Public } from '../../auth/decorators/public.decorator';
 
+@UseGuards(ApiKeyGuard)
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
@@ -29,6 +33,7 @@ export class UsersController {
     return this.usersService.getProfile(userId);
   }
 
+  @Public()
   @Post('signup')
   create(@Body() payload: CreateUserDto) {
     return this.usersService.create(payload);
