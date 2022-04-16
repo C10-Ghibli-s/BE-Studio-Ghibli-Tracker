@@ -1,18 +1,18 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { Profile, Strategy } from 'passport-facebook';
 import config from '../../configs/config';
+import { Profile, Strategy } from 'passport-twitter';
 
 @Injectable()
-export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
+export class TwitterStrategy extends PassportStrategy(Strategy, 'twitter') {
   constructor(
     @Inject(config.KEY) private configService: ConfigType<typeof config>,
   ) {
     super({
-      clientID: configService.faceAppId,
-      clientSecret: configService.faceAppSec,
-      callbackURL: 'http://localhost:3000/auth/facebook/redirect',
+      consumerKey: configService.twitterKey,
+      consumerSecret: configService.twitterSecret,
+      callbackURL: 'http://localhost:3000/auth/twitter/redirect',
       scope: 'email',
       profileFields: ['emails', 'name'],
     });

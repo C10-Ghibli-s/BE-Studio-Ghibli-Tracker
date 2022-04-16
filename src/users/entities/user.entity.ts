@@ -27,6 +27,7 @@ export class User {
   profilePicture?: string;
 
   @Column({ type: 'varchar' })
+  @Exclude()
   password: string;
 
   @Column({ type: 'varchar', unique: true, nullable: true })
@@ -43,6 +44,9 @@ export class User {
 
   @Column({ name: 'movie_watched', type: 'integer', default: 0 })
   movieWatched: number;
+
+  @Column({ type: 'varchar', length: 100 })
+  role: string;
 
   @CreateDateColumn({
     name: 'create_at',

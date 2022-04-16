@@ -10,7 +10,6 @@ import {
 } from 'class-validator';
 
 import { PartialType, ApiProperty } from '@nestjs/swagger';
-import { Exclude } from 'class-transformer';
 
 export class CreateUserDto {
   @IsString()
@@ -22,7 +21,6 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Exclude()
   @Length(7)
   readonly password: string;
 
@@ -48,6 +46,7 @@ export class CreateUserDto {
   readonly facebook?: string;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty()
   readonly movieWatched: number;
 
@@ -55,6 +54,11 @@ export class CreateUserDto {
   @ApiProperty()
   @IsOptional()
   readonly scoreId: number;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly role: string;
 
   @IsPositive()
   @ApiProperty()
