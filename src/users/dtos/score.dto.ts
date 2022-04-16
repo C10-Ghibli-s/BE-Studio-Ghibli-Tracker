@@ -1,5 +1,5 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsString, IsDecimal, IsPositive } from 'class-validator';
+import { IsString, IsDecimal, IsPositive, IsOptional } from 'class-validator';
 
 export class CreateScoreDto {
   @IsString()

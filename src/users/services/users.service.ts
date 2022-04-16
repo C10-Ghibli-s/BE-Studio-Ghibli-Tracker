@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -41,7 +46,15 @@ export class UsersService {
       const movie = await this.moviesService.getOne(data.movieId);
       newUser.movie = movie;
     }
-    return this.userRepo.save(newUser);
+    const user = this.userRepo
+      .save(newUser)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        throw new BadRequestException(`${err.message || 'Unexpected Error'}`);
+      });
+    return user;
   }
 
   async update(id: number, data: UpdateUserDto) {

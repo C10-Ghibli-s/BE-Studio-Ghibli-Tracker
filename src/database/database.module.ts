@@ -3,6 +3,7 @@ import { ConfigType } from '@nestjs/config';
 import { Client } from 'pg';
 import config from './../configs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { getSsl } from 'src/common/helpers/get-ssl';
 
 @Global()
 @Module({
@@ -10,15 +11,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forRootAsync({
       inject: [config.KEY],
       useFactory: (configService: ConfigType<typeof config>) => {
-        const { user, host, dbName, password, port } = configService.postgres;
+        const ssl = getSsl();
         return {
           type: 'postgres',
           url: configService.postgresUrl,
+          entities: ['dist/**/*.entity{.ts,.js}'],
           synchronize: false,
           autoLoadEntities: true,
-          ssl: {
-            rejectUnauthorized: false,
-          },
+          ssl,
         };
       },
     }),

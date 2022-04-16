@@ -27,6 +27,7 @@ export class User {
   profilePicture?: string;
 
   @Column({ type: 'varchar' })
+  @Exclude()
   password: string;
 
   @Column({ type: 'varchar', unique: true, nullable: true })
