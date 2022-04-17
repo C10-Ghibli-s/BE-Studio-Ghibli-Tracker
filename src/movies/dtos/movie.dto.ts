@@ -10,10 +10,6 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class CreateMovieDto {
   @IsString()
-  @ApiProperty()
-  readonly seenMark: string;
-
-  @IsString()
   @IsUrl()
   @ApiProperty()
   readonly linkWiki: string;

@@ -53,7 +53,7 @@ export class CreateUserDto {
   @IsPositive()
   @ApiProperty()
   @IsOptional()
-  readonly scoreId: number;
+  readonly interactionId: number;
 
   @IsString()
   @IsNotEmpty()

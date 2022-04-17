@@ -1,4 +1,3 @@
-import { title } from 'process';
 import {
   PrimaryGeneratedColumn,
   Column,
@@ -14,7 +13,7 @@ import {
 
 import { User } from 'src/users/entities/user.entity';
 import { Title } from './title.entity';
-import { Score } from './../../users/entities/score.entity';
+import { Interaction } from '../../users/entities/interaction.entity';
 import { Director } from './director.entity';
 import { Musician } from './musician.entity';
 import { Writer } from './writer.entity';
@@ -24,12 +23,6 @@ import { Exclude } from 'class-transformer';
 export class Movie {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column({
-    name: 'seen_mark',
-    type: 'varchar',
-  })
-  seenMark: string;
 
   @Column({
     name: 'link_wiki',
@@ -67,8 +60,8 @@ export class Movie {
   @OneToMany(() => User, (user) => user.movie)
   users: User[];
 
-  @OneToMany(() => Score, (score) => score.movie)
-  scores: Score[];
+  @OneToMany(() => Interaction, (interaction) => interaction.movie)
+  interactions: Interaction[];
 
   @ManyToMany(() => Director, (director) => director.movies)
   @JoinTable({

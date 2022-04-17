@@ -27,7 +27,7 @@ export class MoviesController {
   constructor(private moviesService: MoviesService) {}
 
   @Get()
-  @Public()
+  @Roles(Role.ADMIN)
   showAllMovies() {
     return this.moviesService.findAll();
   }

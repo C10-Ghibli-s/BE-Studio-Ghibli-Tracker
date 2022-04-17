@@ -4,6 +4,8 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import * as dotenv from 'dotenv';
+import * as session from 'express-session';
+import * as passport from 'passport';
 
 dotenv.config();
 
@@ -24,6 +26,17 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
+
+  app.use(
+    session({
+      secret: 'nest cats',
+      resave: false,
+      saveUninitialized: false,
+    }),
+  );
+
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   app.enableCors();
   await app.listen(process.env.PORT || 3000);
