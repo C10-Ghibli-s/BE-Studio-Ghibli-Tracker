@@ -37,6 +37,9 @@ export class Movie {
   @Column({ name: 'release_date', type: 'date' })
   releaseDate: string;
 
+  @Column({ name: 'audience_score', type: 'decimal' })
+  audienceScore: number;
+
   @CreateDateColumn({
     name: 'create_at',
     type: 'timestamp with time zone',

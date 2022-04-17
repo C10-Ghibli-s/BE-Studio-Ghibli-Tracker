@@ -30,9 +30,6 @@ export class Interaction {
   @Column({ name: 'score_by_star', type: 'decimal' })
   scoreByStar: number;
 
-  @Column({ name: 'audience_score', type: 'decimal' })
-  audienceScore: number;
-
   @CreateDateColumn({
     name: 'create_at',
     type: 'timestamp with time zone',
