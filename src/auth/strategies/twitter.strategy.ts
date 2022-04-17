@@ -12,7 +12,8 @@ export class TwitterStrategy extends PassportStrategy(Strategy, 'twitter') {
     super({
       consumerKey: configService.twitterKey,
       consumerSecret: configService.twitterSecret,
-      callbackURL: 'http://localhost:3000/auth/twitter/redirect',
+      callbackURL:
+        'https://studio-ghibli-c10-platzimaster.herokuapp.com/auth/twitter/redirect',
       scope: 'email',
       profileFields: ['emails', 'name'],
     });

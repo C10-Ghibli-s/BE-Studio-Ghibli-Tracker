@@ -12,7 +12,8 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     super({
       clientID: configService.faceAppId,
       clientSecret: configService.faceAppSec,
-      callbackURL: 'http://localhost:3000/auth/facebook/redirect',
+      callbackURL:
+        'https://studio-ghibli-c10-platzimaster.herokuapp.com/auth/facebook/redirect',
       scope: 'email',
       profileFields: ['emails', 'name'],
     });
