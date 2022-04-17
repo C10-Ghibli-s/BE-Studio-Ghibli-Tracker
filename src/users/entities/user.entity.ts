@@ -18,14 +18,6 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    name: 'profile_picture',
-    type: 'varchar',
-    default: '',
-    nullable: true,
-  })
-  profilePicture?: string;
-
   @Column({ type: 'varchar' })
   @Exclude()
   password: string;
@@ -47,6 +39,14 @@ export class User {
 
   @Column({ type: 'varchar', length: 100 })
   role: string;
+
+  @Column({
+    name: 'profile_picture',
+    type: 'varchar',
+    default: '',
+    nullable: true,
+  })
+  profilePicture?: string;
 
   @CreateDateColumn({
     name: 'create_at',
