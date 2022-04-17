@@ -46,7 +46,7 @@ npm run lint
 
 ## The DataBase Modeling
 ---
-We identify seven entities from studio ghibli tracker. They are users, movies, titles, scores, writers, directors and musicians, only two of them are strong entites which are users and movies; the other ones are weak entities. In the next picture is shown the ER diagram and the relationship that entities have each other.
+We identify seven entities from studio ghibli tracker. They are users, movies, titles, interactions, writers, directors and musicians, only two of them are strong entites which are users and movies; the other ones are weak entities. In the next picture is shown the ER diagram and the relationship that entities have each other.
 
 ![ER diagram for studio ghibli tracker](./img/ERDiagram.jpg)
 

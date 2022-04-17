@@ -46,16 +46,23 @@ export class CreateUserDto {
   readonly facebook?: string;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty()
   readonly movieWatched: number;
 
   @IsPositive()
   @ApiProperty()
   @IsOptional()
-  readonly scoreId: number;
+  readonly interactionId: number;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly role: string;
 
   @IsPositive()
   @ApiProperty()
+  @IsOptional()
   readonly movieId: number;
 }
 

@@ -5,15 +5,10 @@ import {
   IsPositive,
   IsNotEmpty,
   IsArray,
-  IsBoolean,
 } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class CreateMovieDto {
-  @IsBoolean()
-  @ApiProperty()
-  readonly seenMark: boolean;
-
   @IsString()
   @IsUrl()
   @ApiProperty()

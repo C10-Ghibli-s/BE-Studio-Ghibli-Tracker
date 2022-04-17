@@ -10,13 +10,19 @@ import {
 } from 'typeorm';
 
 import { User } from './user.entity';
-import { Movie } from './../../movies/entities/movie.entity';
+import { Movie } from '../../movies/entities/movie.entity';
 import { Exclude } from 'class-transformer';
 
-@Entity({ name: 'scores' })
-export class Score {
+@Entity({ name: 'interactions' })
+export class Interaction {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({
+    name: 'seen_mark',
+    type: 'varchar',
+  })
+  seenMark: boolean;
 
   @Column({ name: 'score_by_emoji', type: 'varchar' })
   scoreByEmoji: string;
@@ -43,10 +49,10 @@ export class Score {
   @Exclude()
   updateAt: Date;
 
-  @OneToOne(() => User, (user) => user.score)
+  @OneToOne(() => User, (user) => user.interaction)
   user: User;
 
-  @ManyToOne(() => Movie, (movie) => movie.scores)
+  @ManyToOne(() => Movie, (movie) => movie.interactions)
   @JoinColumn({ name: 'movie_id' })
   movie: Movie;
 }

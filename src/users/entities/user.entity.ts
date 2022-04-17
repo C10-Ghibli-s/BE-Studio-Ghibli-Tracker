@@ -9,7 +9,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 
-import { Score } from './score.entity';
+import { Interaction } from './interaction.entity';
 import { Movie } from './../../movies/entities/movie.entity';
 import { Exclude } from 'class-transformer';
 
@@ -45,6 +45,9 @@ export class User {
   @Column({ name: 'movie_watched', type: 'integer', default: 0 })
   movieWatched: number;
 
+  @Column({ type: 'varchar', length: 100 })
+  role: string;
+
   @CreateDateColumn({
     name: 'create_at',
     type: 'timestamp with time zone',
@@ -61,9 +64,11 @@ export class User {
   @Exclude()
   updateAt: Date;
 
-  @OneToOne(() => Score, (score) => score.user, { nullable: true })
-  @JoinColumn({ name: 'score_id' })
-  score: Score;
+  @OneToOne(() => Interaction, (interaction) => interaction.user, {
+    nullable: true,
+  })
+  @JoinColumn({ name: 'interaction_id' })
+  interaction: Interaction;
 
   @ManyToOne(() => Movie, (movie) => movie.users)
   @JoinColumn({ name: 'movie_id' })

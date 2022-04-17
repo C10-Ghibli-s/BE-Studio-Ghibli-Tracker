@@ -7,10 +7,12 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import * as bcrypt from 'bcrypt';
+
 import { User } from './../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from './../dtos/user.dto';
 import { Client } from 'pg';
-import { ScoresService } from './scores.service';
+import { InteractionsService } from './interations.service';
 import { MoviesService } from './../../movies/services/movies.service';
 
 @Injectable()
@@ -18,7 +20,7 @@ export class UsersService {
   constructor(
     @Inject('PG') private clientPg: Client,
     @InjectRepository(User) private userRepo: Repository<User>,
-    private scoreService: ScoresService,
+    private interactionService: InteractionsService,
     private moviesService: MoviesService,
   ) {}
 
@@ -38,9 +40,13 @@ export class UsersService {
 
   async create(data: CreateUserDto) {
     const newUser = this.userRepo.create(data);
-    if (data.scoreId) {
-      const score = await this.scoreService.getOne(data.scoreId);
-      newUser.score = score;
+    const hashPassword = await bcrypt.hash(newUser.password, 10);
+    newUser.password = hashPassword;
+    if (data.interactionId) {
+      const interaction = await this.interactionService.getOne(
+        data.interactionId,
+      );
+      newUser.interaction = interaction;
     }
     if (data.movieId) {
       const movie = await this.moviesService.getOne(data.movieId);
@@ -65,5 +71,9 @@ export class UsersService {
 
   deleteUser(id: number) {
     return this.userRepo.delete(id);
+  }
+
+  findByEmail(email: string) {
+    return this.userRepo.findOne({ where: { email } });
   }
 }

@@ -1,14 +1,14 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class init1649798399261 implements MigrationInterface {
-  name = 'init1649798399261';
+export class init1650211076668 implements MigrationInterface {
+  name = 'init1650211076668';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TABLE "scores" ("id" SERIAL NOT NULL, "score_by_emoji" character varying NOT NULL, "score_by_star" numeric NOT NULL, "audience_score" numeric NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "movie_id" integer, CONSTRAINT "PK_c36917e6f26293b91d04b8fd521" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "interactions" ("id" SERIAL NOT NULL, "seen_mark" character varying NOT NULL, "score_by_emoji" character varying NOT NULL, "score_by_star" numeric NOT NULL, "audience_score" numeric NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "movie_id" integer, CONSTRAINT "PK_911b7416a6671b4148b18c18ecb" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "users" ("id" SERIAL NOT NULL, "profile_picture" character varying DEFAULT '', "password" character varying NOT NULL, "email" character varying, "nickname" character varying NOT NULL, "twitter" character varying, "facebook" character varying, "movie_watched" integer NOT NULL DEFAULT '0', "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "score_id" integer, "movie_id" integer, CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "UQ_ad02a1be8707004cb805a4b5023" UNIQUE ("nickname"), CONSTRAINT "UQ_c0ea53ca26f84343e6e36eb2118" UNIQUE ("twitter"), CONSTRAINT "UQ_1fc8d056c7f4de3711f1caf785f" UNIQUE ("facebook"), CONSTRAINT "REL_611c1877092bd01d9c328e8ccc" UNIQUE ("score_id"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "users" ("id" SERIAL NOT NULL, "profile_picture" character varying DEFAULT '', "password" character varying NOT NULL, "email" character varying, "nickname" character varying NOT NULL, "twitter" character varying, "facebook" character varying, "movie_watched" integer NOT NULL DEFAULT '0', "role" character varying(100) NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "interaction_id" integer, "movie_id" integer, CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "UQ_ad02a1be8707004cb805a4b5023" UNIQUE ("nickname"), CONSTRAINT "UQ_c0ea53ca26f84343e6e36eb2118" UNIQUE ("twitter"), CONSTRAINT "UQ_1fc8d056c7f4de3711f1caf785f" UNIQUE ("facebook"), CONSTRAINT "REL_86155798b48ab53256218edb6e" UNIQUE ("interaction_id"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "titles" ("id" SERIAL NOT NULL, "title" character varying NOT NULL, "original_title" character varying NOT NULL, "romaji_title" character varying NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), CONSTRAINT "UQ_0191ddd35ba7e4c2dc641b64528" UNIQUE ("title"), CONSTRAINT "UQ_15bfc384fd834c25d72e4d39649" UNIQUE ("original_title"), CONSTRAINT "UQ_3b5e835e6d175c182b48b47da5c" UNIQUE ("romaji_title"), CONSTRAINT "PK_7c5aeca381c331c3aaf9d50931c" PRIMARY KEY ("id"))`,
@@ -20,7 +20,7 @@ export class init1649798399261 implements MigrationInterface {
       `CREATE TABLE "writers" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), CONSTRAINT "UQ_a66b09f8a8c4e260af033e659e7" UNIQUE ("name"), CONSTRAINT "PK_9b15ff1c2dff5079a773e982567" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "movies" ("id" SERIAL NOT NULL, "seen_mark" boolean NOT NULL, "link_wiki" character varying NOT NULL, "duration" character varying NOT NULL, "release_date" date NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "title_id" integer, CONSTRAINT "UQ_34df73113d68aaab0ae78eb2a05" UNIQUE ("link_wiki"), CONSTRAINT "REL_ca97fcb315e058050223df0536" UNIQUE ("title_id"), CONSTRAINT "PK_c5b2c134e871bfd1c2fe7cc3705" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "movies" ("id" SERIAL NOT NULL, "link_wiki" character varying NOT NULL, "duration" character varying NOT NULL, "release_date" date NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "title_id" integer, CONSTRAINT "UQ_34df73113d68aaab0ae78eb2a05" UNIQUE ("link_wiki"), CONSTRAINT "REL_ca97fcb315e058050223df0536" UNIQUE ("title_id"), CONSTRAINT "PK_c5b2c134e871bfd1c2fe7cc3705" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "directors" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), CONSTRAINT "UQ_405bf12dff92cd37ebbf78bc628" UNIQUE ("name"), CONSTRAINT "PK_a9ae28f00c93801aa034a2c1773" PRIMARY KEY ("id"))`,
@@ -53,10 +53,10 @@ export class init1649798399261 implements MigrationInterface {
       `CREATE INDEX "IDX_eeafd6bcd5797f3f730980bdfa" ON "movies_directors" ("director_id") `,
     );
     await queryRunner.query(
-      `ALTER TABLE "scores" ADD CONSTRAINT "FK_c8bba22d7468874d8f003f3f04a" FOREIGN KEY ("movie_id") REFERENCES "movies"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+      `ALTER TABLE "interactions" ADD CONSTRAINT "FK_493183d464eb7780afe9d9e842b" FOREIGN KEY ("movie_id") REFERENCES "movies"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `ALTER TABLE "users" ADD CONSTRAINT "FK_611c1877092bd01d9c328e8ccc4" FOREIGN KEY ("score_id") REFERENCES "scores"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+      `ALTER TABLE "users" ADD CONSTRAINT "FK_86155798b48ab53256218edb6eb" FOREIGN KEY ("interaction_id") REFERENCES "interactions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "users" ADD CONSTRAINT "FK_43c07349022b507ac23bb832440" FOREIGN KEY ("movie_id") REFERENCES "movies"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
@@ -110,10 +110,10 @@ export class init1649798399261 implements MigrationInterface {
       `ALTER TABLE "users" DROP CONSTRAINT "FK_43c07349022b507ac23bb832440"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "users" DROP CONSTRAINT "FK_611c1877092bd01d9c328e8ccc4"`,
+      `ALTER TABLE "users" DROP CONSTRAINT "FK_86155798b48ab53256218edb6eb"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "scores" DROP CONSTRAINT "FK_c8bba22d7468874d8f003f3f04a"`,
+      `ALTER TABLE "interactions" DROP CONSTRAINT "FK_493183d464eb7780afe9d9e842b"`,
     );
     await queryRunner.query(
       `DROP INDEX "public"."IDX_eeafd6bcd5797f3f730980bdfa"`,
@@ -142,6 +142,6 @@ export class init1649798399261 implements MigrationInterface {
     await queryRunner.query(`DROP TABLE "musicians"`);
     await queryRunner.query(`DROP TABLE "titles"`);
     await queryRunner.query(`DROP TABLE "users"`);
-    await queryRunner.query(`DROP TABLE "scores"`);
+    await queryRunner.query(`DROP TABLE "interactions"`);
   }
 }
