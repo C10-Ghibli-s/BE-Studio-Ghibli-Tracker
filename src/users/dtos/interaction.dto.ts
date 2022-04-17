@@ -10,10 +10,6 @@ export class CreateInteractionDto {
   @ApiProperty()
   readonly scoreByStar: number;
 
-  @IsDecimal()
-  @ApiProperty()
-  readonly audienceScore: number;
-
   @IsPositive()
   @ApiProperty()
   readonly movieId: number;

@@ -5,6 +5,7 @@ import {
   IsPositive,
   IsNotEmpty,
   IsArray,
+  IsDecimal,
 } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
@@ -21,6 +22,10 @@ export class CreateMovieDto {
   @IsString()
   @ApiProperty()
   readonly releaseDate: string;
+
+  @IsDecimal()
+  @ApiProperty()
+  readonly audienceScore: number;
 
   @IsPositive()
   @ApiProperty()
