@@ -11,13 +11,14 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Role } from 'src/auth/models/roles.model';
 import { CreateTitleDto, UpdateTitleDto } from '../dtos/title.dto';
 
 import { TitlesService } from './../services/titles.service';
 
-@UseGuards(RolesGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiTags('Titles')
 @Controller('titles')
 export class TitlesController {

@@ -15,8 +15,9 @@ import { CreateMusicianDto, UpdateMusicianDto } from '../dtos/musician.dto';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/models/roles.model';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
-@UseGuards(RolesGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiTags('Musicians')
 @Controller('musicians')
 export class MusiciansController {
