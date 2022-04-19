@@ -73,8 +73,4 @@ export class AuthService {
       throw new BadRequestException('Old password does not match');
     }
   }
-
-  logout() {}
-
-  refreshToken() {}
 }

@@ -16,8 +16,6 @@ import { User } from './../../users/entities/user.entity';
 import { RequestResetPasswordDto } from '../dtos/request-reset-password.dto';
 import { ResetPasswordDto } from '../dtos/reset-password.dto';
 import { ChangePasswordDto } from '../dtos/change-password.dto';
-import { Roles } from '../decorators/roles.decorator';
-import { Role } from '../models/roles.model';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { ApiTags } from '@nestjs/swagger';
@@ -92,15 +90,5 @@ export class AuthController {
     @GetUser() user: User,
   ) {
     return this.authService.changePassword(changePasswordDto, user);
-  }
-
-  @Post('logout')
-  logout() {
-    this.authService.logout();
-  }
-
-  @Post('refresh')
-  refreshToken() {
-    this.authService.refreshToken();
   }
 }

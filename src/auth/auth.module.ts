@@ -13,7 +13,6 @@ import config from './../configs/config';
 import { ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
-import { RefreshToken } from './strategies/refreshToken.strategy';
 
 @Module({
   imports: [
@@ -38,7 +37,6 @@ import { RefreshToken } from './strategies/refreshToken.strategy';
     FacebookStrategy,
     TwitterStrategy,
     JwtStrategy,
-    RefreshToken,
   ],
   controllers: [AuthController],
 })
