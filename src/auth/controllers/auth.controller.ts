@@ -1,7 +1,9 @@
 import {
+  Body,
   Controller,
   Get,
   HttpStatus,
+  Patch,
   Post,
   Req,
   UseGuards,
@@ -11,6 +13,8 @@ import { AuthGuard } from '@nestjs/passport';
 
 import { AuthService } from './../services/auth.service';
 import { User } from './../../users/entities/user.entity';
+import { RequestResetPasswordDto } from '../dtos/request-reset-password.dto';
+import { ResetPasswordDto } from '../dtos/reset-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -50,5 +54,17 @@ export class AuthController {
       statusCode: HttpStatus.OK,
       data: req.user,
     };
+  }
+
+  @Patch('request-reset-password')
+  requestResetPassword(
+    @Body() requestResetPasswordDto: RequestResetPasswordDto,
+  ): Promise<void> {
+    return this.authService.requestResetPassword(requestResetPasswordDto);
+  }
+
+  @Patch('reset-password')
+  resetPassword(@Body() resetPasswordDto: ResetPasswordDto): Promise<void> {
+    return this.authService.resetPasword(resetPasswordDto);
   }
 }

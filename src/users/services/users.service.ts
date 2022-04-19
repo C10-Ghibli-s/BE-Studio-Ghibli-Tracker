@@ -60,7 +60,19 @@ export class UsersService {
     return this.userRepo.delete(id);
   }
 
-  findByEmail(email: string) {
-    return this.userRepo.findOne({ where: { email } });
+  async findByEmail(email: string) {
+    const user: User = await this.userRepo.findOne({ where: { email } });
+    if (!user) {
+      throw new NotFoundException(`User with email ${email} not found`);
+    }
+    return user;
+  }
+
+  async findOneByresetPasswordToken(resetPasswordToken: string): Promise<User> {
+    const user: User = await this.userRepo.findOne({ resetPasswordToken });
+    if (!user) {
+      throw new NotFoundException();
+    }
+    return user;
   }
 }

@@ -12,6 +12,7 @@ import {
 import { Interaction } from './interaction.entity';
 import { Movie } from './../../movies/entities/movie.entity';
 import { Exclude } from 'class-transformer';
+import { type } from 'os';
 
 @Entity({ name: 'users' })
 export class User {
@@ -47,6 +48,14 @@ export class User {
     nullable: true,
   })
   profilePicture?: string;
+
+  @Column({
+    type: 'uuid',
+    unique: true,
+    name: 'reset_password_token',
+    nullable: true,
+  })
+  resetPasswordToken: string;
 
   @CreateDateColumn({
     name: 'create_at',
