@@ -48,6 +48,14 @@ export class User {
   })
   profilePicture?: string;
 
+  @Column({
+    type: 'uuid',
+    unique: true,
+    name: 'reset_password_token',
+    nullable: true,
+  })
+  resetPasswordToken: string;
+
   @CreateDateColumn({
     name: 'create_at',
     type: 'timestamp with time zone',
