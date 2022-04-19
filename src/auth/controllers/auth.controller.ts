@@ -16,7 +16,7 @@ import { User } from './../../users/entities/user.entity';
 export class AuthController {
   constructor(private authService: AuthService) {}
   @UseGuards(AuthGuard('local'))
-  @Post('login/email')
+  @Post('login/nickname')
   login(@Req() req: Request) {
     const user = req.user as User;
     return this.authService.generateJWT(user);
