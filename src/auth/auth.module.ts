@@ -13,6 +13,7 @@ import config from './../configs/config';
 import { ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
+import { RefreshToken } from './strategies/refreshToken.strategy';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { User } from 'src/users/entities/user.entity';
         return {
           secret: configService.jwtSecret,
           signOptions: {
-            expiresIn: '10d',
+            expiresIn: '5m',
           },
         };
       },
@@ -37,6 +38,7 @@ import { User } from 'src/users/entities/user.entity';
     FacebookStrategy,
     TwitterStrategy,
     JwtStrategy,
+    RefreshToken,
   ],
   controllers: [AuthController],
 })

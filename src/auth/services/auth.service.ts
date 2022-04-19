@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersService } from './../../users/services/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -9,6 +9,7 @@ import { v4 } from 'uuid';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ResetPasswordDto } from '../dtos/reset-password.dto';
+import { ChangePasswordDto } from '../dtos/change-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -58,4 +59,22 @@ export class AuthService {
     user.resetPasswordToken = null;
     this.userRepo.save(user);
   }
+
+  async changePassword(changePasswordDto: ChangePasswordDto, user: User) {
+    const { oldPassword, newPassword } = changePasswordDto;
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (isMatch) {
+      const salt = await bcrypt.gentSalt();
+      const hashPassword = await bcrypt.hash(newPassword, salt);
+      user.password = hashPassword;
+      this.userRepo.save(user);
+      return user;
+    } else {
+      throw new BadRequestException('Old password does not match');
+    }
+  }
+
+  logout() {}
+
+  refreshToken() {}
 }

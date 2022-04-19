@@ -12,7 +12,6 @@ import {
 import { Interaction } from './interaction.entity';
 import { Movie } from './../../movies/entities/movie.entity';
 import { Exclude } from 'class-transformer';
-import { type } from 'os';
 
 @Entity({ name: 'users' })
 export class User {
@@ -56,6 +55,14 @@ export class User {
     nullable: true,
   })
   resetPasswordToken: string;
+
+  @Column({
+    type: 'varchar',
+    unique: true,
+    name: 'refresh_access_token',
+    nullable: true,
+  })
+  hashedRT: string;
 
   @CreateDateColumn({
     name: 'create_at',
