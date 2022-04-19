@@ -73,7 +73,7 @@ export class UsersService {
     return this.userRepo.delete(id);
   }
 
-  findByEmail(email: string) {
-    return this.userRepo.findOne({ where: { email } });
+  findByNicname(nickname: string) {
+    return this.userRepo.findOne({ where: { nickname } });
   }
 }
