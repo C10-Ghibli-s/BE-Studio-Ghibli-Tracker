@@ -20,7 +20,6 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/public.decorator';
-import { GetUser } from '../decorators/get-user.decorator';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @ApiTags('Authentications')
@@ -83,12 +82,14 @@ export class AuthController {
     return this.authService.resetPasword(resetPasswordDto);
   }
 
+  @Public()
   @Patch('change-password')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('local'))
   changePassword(
     @Body() changePasswordDto: ChangePasswordDto,
-    @GetUser() user: User,
+    @Req() req: Request,
   ) {
+    const user = req.user as User;
     return this.authService.changePassword(changePasswordDto, user);
   }
 }

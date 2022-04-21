@@ -24,15 +24,8 @@ export class AuthService {
     if (user) {
       const isMatch = await bcrypt.compare(password, user.password);
       if (isMatch) {
-        const {
-          password,
-          createAt,
-          updateAt,
-          facebook,
-          twitter,
-          email,
-          ...rta
-        } = user;
+        const { password, createAt, updateAt, facebook, twitter, ...rta } =
+          user;
         return rta;
       }
     }
@@ -68,7 +61,7 @@ export class AuthService {
     this.userRepo.save(user);
   }
 
-  async changePassword(changePasswordDto: ChangePasswordDto, user: User) {
+  async changePassword(changePasswordDto: ChangePasswordDto, user) {
     const { oldPassword, newPassword } = changePasswordDto;
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (isMatch) {
