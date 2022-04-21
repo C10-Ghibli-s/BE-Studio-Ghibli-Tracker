@@ -26,11 +26,12 @@ export class MoviesController {
   constructor(private moviesService: MoviesService) {}
 
   @Get()
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.USER)
   showAllMovies() {
     return this.moviesService.findAll();
   }
 
+  @Roles(Role.ADMIN, Role.USER)
   @Get(':movieId')
   showAMovie(@Param('movieId', ParseIntPipe) movieId: number) {
     return this.moviesService.getOne(movieId);
