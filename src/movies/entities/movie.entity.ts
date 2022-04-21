@@ -40,6 +40,12 @@ export class Movie {
   @Column({ name: 'audience_score', type: 'decimal' })
   audienceScore: number;
 
+  @Column({ name: 'movie_banner', type: 'varchar', length: 255 })
+  movieBanner: string;
+
+  @Column({ name: 'film_description', type: 'varchar', length: 255 })
+  description: string;
+
   @CreateDateColumn({
     name: 'create_at',
     type: 'timestamp with time zone',

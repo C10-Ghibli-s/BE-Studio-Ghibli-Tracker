@@ -27,9 +27,19 @@ export class CreateMovieDto {
   @ApiProperty()
   readonly audienceScore: number;
 
+  @IsUrl()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly movieBanner: string;
+
   @IsPositive()
   @ApiProperty()
   readonly titleId: number;
+
+  @IsNotEmpty()
+  @ApiProperty()
+  @IsString()
+  readonly description: string;
 
   @ApiProperty()
   @IsNotEmpty()
