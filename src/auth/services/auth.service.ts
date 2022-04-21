@@ -42,14 +42,17 @@ export class AuthService {
 
   async requestResetPassword(
     requestResetPasswordDto: RequestResetPasswordDto,
-  ): Promise<void> {
+  ): Promise<any> {
     const { email } = requestResetPasswordDto;
     const user: User = await this.userService.findByEmail(email);
     user.resetPasswordToken = v4();
     this.userRepo.save(user);
+    return {
+      id: user.id,
+    };
   }
 
-  async resetPasword(resetPasswordDto: ResetPasswordDto): Promise<void> {
+  async resetPasword(resetPasswordDto: ResetPasswordDto): Promise<any> {
     const { resetPasswordToken, password } = resetPasswordDto;
     const user: User = await this.userService.findOneByresetPasswordToken(
       resetPasswordToken,
