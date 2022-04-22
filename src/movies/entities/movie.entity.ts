@@ -17,7 +17,7 @@ import { Interaction } from '../../users/entities/interaction.entity';
 import { Director } from './director.entity';
 import { Musician } from './musician.entity';
 import { Writer } from './writer.entity';
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity({ name: 'movies' })
 export class Movie {
@@ -89,4 +89,16 @@ export class Movie {
 
   @ManyToMany(() => Writer, (writer) => writer.movies)
   writers: Writer[];
+
+  @Expose()
+  get information() {
+    if (this.directors) {
+      return this.directors
+        .filter((item) => !!item)
+        .map((item) => ({
+          ...item.movies,
+        }));
+    }
+    return [];
+  }
 }
