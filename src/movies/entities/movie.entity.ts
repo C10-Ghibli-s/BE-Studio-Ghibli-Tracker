@@ -31,7 +31,7 @@ export class Movie {
   })
   linkWiki: string;
 
-  @Column({ type: 'varchar', unsigned: true })
+  @Column({ type: 'integer', unsigned: true })
   duration: number;
 
   @Column({ name: 'release_date', type: 'date' })
@@ -43,7 +43,7 @@ export class Movie {
   @Column({ name: 'movie_banner', type: 'varchar', length: 255 })
   movieBanner: string;
 
-  @Column({ name: 'film_description', type: 'varchar', length: 255 })
+  @Column({ name: 'film_description', type: 'text' })
   description: string;
 
   @CreateDateColumn({

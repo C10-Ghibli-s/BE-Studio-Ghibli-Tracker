@@ -20,7 +20,7 @@ export class Interaction {
 
   @Column({
     name: 'seen_mark',
-    type: 'varchar',
+    type: 'boolean',
   })
   seenMark: boolean;
 
