@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class init1650406122367 implements MigrationInterface {
-  name = 'init1650406122367';
+export class init1650645554634 implements MigrationInterface {
+  name = 'init1650645554634';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TABLE "interactions" ("id" SERIAL NOT NULL, "seen_mark" character varying NOT NULL, "score_by_emoji" character varying NOT NULL, "score_by_star" numeric NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "movie_id" integer, CONSTRAINT "PK_911b7416a6671b4148b18c18ecb" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "interactions" ("id" SERIAL NOT NULL, "seen_mark" boolean NOT NULL, "score_by_emoji" character varying NOT NULL, "score_by_star" numeric NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "movie_id" integer, CONSTRAINT "PK_911b7416a6671b4148b18c18ecb" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "users" ("id" SERIAL NOT NULL, "password" character varying NOT NULL, "email" character varying, "nickname" character varying NOT NULL, "twitter" character varying, "facebook" character varying, "movie_watched" integer NOT NULL DEFAULT '0', "role" character varying(100) NOT NULL, "profile_picture" character varying DEFAULT '', "reset_password_token" uuid, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "interaction_id" integer, "movie_id" integer, CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "UQ_ad02a1be8707004cb805a4b5023" UNIQUE ("nickname"), CONSTRAINT "UQ_c0ea53ca26f84343e6e36eb2118" UNIQUE ("twitter"), CONSTRAINT "UQ_1fc8d056c7f4de3711f1caf785f" UNIQUE ("facebook"), CONSTRAINT "UQ_ee6419219542371563e0592db51" UNIQUE ("reset_password_token"), CONSTRAINT "REL_86155798b48ab53256218edb6e" UNIQUE ("interaction_id"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`,
@@ -20,7 +20,7 @@ export class init1650406122367 implements MigrationInterface {
       `CREATE TABLE "writers" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), CONSTRAINT "UQ_a66b09f8a8c4e260af033e659e7" UNIQUE ("name"), CONSTRAINT "PK_9b15ff1c2dff5079a773e982567" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "movies" ("id" SERIAL NOT NULL, "link_wiki" character varying NOT NULL, "duration" character varying NOT NULL, "release_date" date NOT NULL, "audience_score" numeric NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "title_id" integer, CONSTRAINT "UQ_34df73113d68aaab0ae78eb2a05" UNIQUE ("link_wiki"), CONSTRAINT "REL_ca97fcb315e058050223df0536" UNIQUE ("title_id"), CONSTRAINT "PK_c5b2c134e871bfd1c2fe7cc3705" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "movies" ("id" SERIAL NOT NULL, "link_wiki" character varying NOT NULL, "duration" integer NOT NULL, "release_date" date NOT NULL, "audience_score" numeric NOT NULL, "movie_banner" character varying(255) NOT NULL, "film_description" text NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "title_id" integer, CONSTRAINT "UQ_34df73113d68aaab0ae78eb2a05" UNIQUE ("link_wiki"), CONSTRAINT "REL_ca97fcb315e058050223df0536" UNIQUE ("title_id"), CONSTRAINT "PK_c5b2c134e871bfd1c2fe7cc3705" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "directors" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "create_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "update_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), CONSTRAINT "UQ_405bf12dff92cd37ebbf78bc628" UNIQUE ("name"), CONSTRAINT "PK_a9ae28f00c93801aa034a2c1773" PRIMARY KEY ("id"))`,
