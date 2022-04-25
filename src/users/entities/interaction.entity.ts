@@ -46,7 +46,7 @@ export class Interaction {
   @Exclude()
   updateAt: Date;
 
-  @OneToOne(() => User, (user) => user.interaction)
+  @ManyToOne(() => User, (user) => user.interactions)
   user: User;
 
   @ManyToOne(() => Movie, (movie) => movie.interactions)

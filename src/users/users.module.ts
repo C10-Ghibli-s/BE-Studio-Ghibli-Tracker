@@ -9,9 +9,10 @@ import { InteractionsService } from './services/interations.service';
 import { Interaction } from './entities/interaction.entity';
 
 import { MoviesModule } from './../movies/movies.module';
+import { Movie } from 'src/movies/entities/movie.entity';
 
 @Module({
-  imports: [MoviesModule, TypeOrmModule.forFeature([User, Interaction])],
+  imports: [MoviesModule, TypeOrmModule.forFeature([User, Interaction, Movie])],
   controllers: [UsersController, InteractionsController],
   providers: [UsersService, InteractionsService],
   exports: [UsersService],

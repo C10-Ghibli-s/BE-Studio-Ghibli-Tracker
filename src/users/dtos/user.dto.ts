@@ -7,6 +7,7 @@ import {
   IsUrl,
   IsOptional,
   IsPositive,
+  IsArray,
 } from 'class-validator';
 
 import { PartialType, ApiProperty } from '@nestjs/swagger';
@@ -50,10 +51,10 @@ export class CreateUserDto {
   @ApiProperty()
   readonly movieWatched: number;
 
-  @IsPositive()
+  @IsArray()
   @ApiProperty()
   @IsOptional()
-  readonly interactionId: number;
+  readonly interactionIds: number[];
 
   @IsString()
   @IsNotEmpty()

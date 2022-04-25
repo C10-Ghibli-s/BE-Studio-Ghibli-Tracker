@@ -12,16 +12,18 @@ import * as bcrypt from 'bcrypt';
 import { User } from './../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from './../dtos/user.dto';
 import { Client } from 'pg';
-import { InteractionsService } from './interations.service';
-import { MoviesService } from './../../movies/services/movies.service';
+import { Interaction } from '../entities/interaction.entity';
+import { Movie } from 'src/movies/entities/movie.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject('PG') private clientPg: Client,
     @InjectRepository(User) private userRepo: Repository<User>,
-    private interactionService: InteractionsService,
-    private moviesService: MoviesService,
+    @InjectRepository(Interaction)
+    private interactionRepo: Repository<Interaction>,
+    @InjectRepository(Movie)
+    private movieRepo: Repository<Movie>,
   ) {}
 
   findAll() {
@@ -31,7 +33,9 @@ export class UsersService {
   }
 
   async getProfile(id: number) {
-    const user = await this.userRepo.findOne(id);
+    const user = await this.userRepo.findOne(id, {
+      relations: ['interactions'],
+    });
     if (!user) {
       throw new NotFoundException(`User with #${id} id not found`);
     }
@@ -42,14 +46,8 @@ export class UsersService {
     const newUser = this.userRepo.create(data);
     const hashPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashPassword;
-    if (data.interactionId) {
-      const interaction = await this.interactionService.getOne(
-        data.interactionId,
-      );
-      newUser.interaction = interaction;
-    }
     if (data.movieId) {
-      const movie = await this.moviesService.getOne(data.movieId);
+      const movie = await this.movieRepo.findOne(data.movieId);
       newUser.movie = movie;
     }
     const user = this.userRepo
@@ -65,6 +63,14 @@ export class UsersService {
 
   async update(id: number, data: UpdateUserDto) {
     const user = await this.userRepo.findOne(id);
+    if (data.interactionIds && data.movieId) {
+      const interactions = await this.interactionRepo.findByIds(
+        data.interactionIds,
+      );
+      const movie = await this.movieRepo.findOne(data.movieId);
+      user.interactions = interactions;
+      user.movie = movie;
+    }
     this.userRepo.merge(user, data);
     return this.userRepo.save(user);
   }

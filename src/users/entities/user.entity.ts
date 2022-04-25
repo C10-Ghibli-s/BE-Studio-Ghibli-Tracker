@@ -4,9 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
   JoinColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 import { Interaction } from './interaction.entity';
@@ -72,11 +72,11 @@ export class User {
   @Exclude()
   updateAt: Date;
 
-  @OneToOne(() => Interaction, (interaction) => interaction.user, {
+  @OneToMany(() => Interaction, (interaction) => interaction.user, {
     nullable: true,
   })
   @JoinColumn({ name: 'interaction_id' })
-  interaction: Interaction;
+  interactions: Interaction[];
 
   @ManyToOne(() => Movie, (movie) => movie.users)
   @JoinColumn({ name: 'movie_id' })
