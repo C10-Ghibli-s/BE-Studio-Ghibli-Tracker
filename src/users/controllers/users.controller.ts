@@ -55,7 +55,9 @@ export class UsersController {
   }
 
   @Put(':userId/update/:movieId/interaction/:interactionId')
-  @ApiOperation({ summary: 'Add an Interaction and a movie to Users entity' })
+  @ApiOperation({
+    summary: 'Add a relation between Users, movies and Interaction entities.',
+  })
   @Roles(Role.ADMIN, Role.USER)
   addInterationToUser(
     @Param('userId', ParseIntPipe) userId: number,

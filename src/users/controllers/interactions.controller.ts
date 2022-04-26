@@ -9,7 +9,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { InteractionsService } from '../services/interations.service';
 import {
@@ -29,11 +29,17 @@ export class InteractionsController {
 
   @Get()
   @Roles(Role.ADMIN)
+  @ApiOperation({
+    summary: 'Shows all interactions atributte with Users information.',
+  })
   getAllInteractions() {
     return this.iteractionService.findAll();
   }
 
   @Get(':interactionsId')
+  @ApiOperation({
+    summary: 'Shows an interaction atributte with movies information.',
+  })
   showAScore(@Param('interactionsId', ParseIntPipe) interactionsId: number) {
     return this.iteractionService.getOne(interactionsId);
   }

@@ -12,7 +12,7 @@ import {
 
 import { MoviesService } from './../services/movies.service';
 import { CreateMovieDto, UpdateMovieDto } from './../dtos/movie.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { Role } from '../../auth/models/roles.model';
 
@@ -27,12 +27,19 @@ export class MoviesController {
 
   @Get()
   @Roles(Role.ADMIN, Role.USER)
+  @ApiOperation({
+    summary: 'Returns all the movies with the title information.',
+  })
   showAllMovies() {
     return this.moviesService.findAll();
   }
 
   @Roles(Role.ADMIN, Role.USER)
   @Get(':movieId')
+  @ApiOperation({
+    summary:
+      'Shows all the information about a movie, titles, interactions, musicians, writesr and directors.',
+  })
   showAMovie(@Param('movieId', ParseIntPipe) movieId: number) {
     return this.moviesService.getOne(movieId);
   }
