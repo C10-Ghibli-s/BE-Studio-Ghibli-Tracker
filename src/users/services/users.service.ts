@@ -34,7 +34,7 @@ export class UsersService {
 
   async getProfile(id: number) {
     const user = await this.userRepo.findOne(id, {
-      relations: ['interactions'],
+      relations: ['interactions', 'movie'],
     });
     if (!user) {
       throw new NotFoundException(`User with #${id} id not found`);

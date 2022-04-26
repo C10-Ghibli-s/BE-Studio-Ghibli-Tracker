@@ -24,7 +24,9 @@ export class InteractionsService {
   }
 
   async getOne(id: number) {
-    const score = await this.interactionRepo.findOne(id);
+    const score = await this.interactionRepo.findOne(id, {
+      relations: ['movie'],
+    });
     if (!score) {
       throw new NotFoundException(`The score with #${id} id is not found`);
     }
