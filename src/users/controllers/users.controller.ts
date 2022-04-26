@@ -45,12 +45,28 @@ export class UsersController {
   }
 
   @Put('profile/:userId/update')
+  @ApiOperation({ summary: 'Change information about an User.' })
   @Roles(Role.ADMIN, Role.USER)
   update(
     @Param('userId', ParseIntPipe) userId: number,
     @Body() payload: UpdateUserDto,
   ) {
     return this.usersService.update(userId, payload);
+  }
+
+  @Put(':userId/update/:movieId/interaction/:interactionId')
+  @ApiOperation({ summary: 'Add an Interaction and a movie to Users entity' })
+  @Roles(Role.ADMIN, Role.USER)
+  addInterationToUser(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('movieId', ParseIntPipe) movieId: number,
+    @Param('interactionId', ParseIntPipe) interactionId: number,
+  ) {
+    return this.usersService.addInterationToUser(
+      userId,
+      movieId,
+      interactionId,
+    );
   }
 
   @Delete(':userId')

@@ -63,14 +63,6 @@ export class UsersService {
 
   async update(id: number, data: UpdateUserDto) {
     const user = await this.userRepo.findOne(id);
-    if (data.interactionIds && data.movieId) {
-      const interactions = await this.interactionRepo.findByIds(
-        data.interactionIds,
-      );
-      const movie = await this.movieRepo.findOne(data.movieId);
-      user.interactions = interactions;
-      user.movie = movie;
-    }
     this.userRepo.merge(user, data);
     return this.userRepo.save(user);
   }
@@ -98,4 +90,27 @@ export class UsersService {
     }
     return user;
   }
+
+  async addInterationToUser(
+    userId: number,
+    movieId: number,
+    interactionId: number,
+  ) {
+    const user = await this.userRepo.findOne(userId, {
+      relations: ['interactions'],
+    });
+    const interaction = await this.interactionRepo.findOne(interactionId);
+    user.interactions.push(interaction);
+    const movie = await this.movieRepo.findOne(movieId);
+    user.movie = movie;
+    return this.userRepo.save(user);
+  }
 }
+/* if (data.interactionIds && data.movieId) {
+      const interactions = await this.interactionRepo.findByIds(
+        data.interactionIds,
+      );
+      const movie = await this.movieRepo.findOne(data.movieId);
+      user.interactions = interactions;
+      user.movie = movie;
+    } */
