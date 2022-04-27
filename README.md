@@ -67,6 +67,11 @@ With this driagram in mind we are able to create the physical diagram with the t
 ![Physical diagram](./img/PhysicalDiagram.jpeg)
 
 
+## Deploy
+As a mention in the *built with*, the project is deployed in herku's platform, the Back end side. This is the link to that project:
+[Studio-Ghibli Movie Tracker](https://studio-ghibli-c10-platzimaster.herokuapp.com/).
 
+If you want to know more details about the functionality of each point of the API, take a look of this documentation.
+[Documentation of the API REST](https://studio-ghibli-c10-platzimaster.herokuapp.com/docs/).
 ---
  [C10-Squad-Search-Engine]💚 Platzi Master
