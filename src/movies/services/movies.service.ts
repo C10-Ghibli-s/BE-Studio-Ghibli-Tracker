@@ -27,7 +27,7 @@ export class MoviesService {
 
   async getOne(id: number) {
     const movie = await this.movieRepo.findOne(id, {
-      relations: ['title', 'scores', 'writers', 'directors', 'musicians'],
+      relations: ['title', 'interactions', 'writers', 'directors', 'musicians'],
     });
     if (!movie) {
       throw new NotFoundException(`The mvie with #${id} id is not found`);

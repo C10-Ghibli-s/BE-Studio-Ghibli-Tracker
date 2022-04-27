@@ -1,4 +1,3 @@
-import { title } from 'process';
 import {
   PrimaryGeneratedColumn,
   Column,
@@ -14,7 +13,7 @@ import {
 
 import { User } from 'src/users/entities/user.entity';
 import { Title } from './title.entity';
-import { Score } from './../../users/entities/score.entity';
+import { Interaction } from '../../users/entities/interaction.entity';
 import { Director } from './director.entity';
 import { Musician } from './musician.entity';
 import { Writer } from './writer.entity';
@@ -26,23 +25,26 @@ export class Movie {
   id: number;
 
   @Column({
-    name: 'seen_mark',
-    type: 'varchar',
-  })
-  seenMark: string;
-
-  @Column({
     name: 'link_wiki',
     type: 'varchar',
     unique: true,
   })
   linkWiki: string;
 
-  @Column({ type: 'varchar', unsigned: true })
+  @Column({ type: 'integer', unsigned: true })
   duration: number;
 
   @Column({ name: 'release_date', type: 'date' })
   releaseDate: string;
+
+  @Column({ name: 'audience_score', type: 'decimal' })
+  audienceScore: number;
+
+  @Column({ name: 'movie_banner', type: 'varchar', length: 255 })
+  movieBanner: string;
+
+  @Column({ name: 'film_description', type: 'text' })
+  description: string;
 
   @CreateDateColumn({
     name: 'create_at',
@@ -67,8 +69,8 @@ export class Movie {
   @OneToMany(() => User, (user) => user.movie)
   users: User[];
 
-  @OneToMany(() => Score, (score) => score.movie)
-  scores: Score[];
+  @OneToMany(() => Interaction, (interaction) => interaction.movie)
+  interactions: Interaction[];
 
   @ManyToMany(() => Director, (director) => director.movies)
   @JoinTable({

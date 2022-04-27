@@ -4,12 +4,12 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
   JoinColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
-import { Score } from './score.entity';
+import { Interaction } from './interaction.entity';
 import { Movie } from './../../movies/entities/movie.entity';
 import { Exclude } from 'class-transformer';
 
@@ -18,15 +18,8 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    name: 'profile_picture',
-    type: 'varchar',
-    default: '',
-    nullable: true,
-  })
-  profilePicture?: string;
-
   @Column({ type: 'varchar' })
+  @Exclude()
   password: string;
 
   @Column({ type: 'varchar', unique: true, nullable: true })
@@ -44,6 +37,25 @@ export class User {
   @Column({ name: 'movie_watched', type: 'integer', default: 0 })
   movieWatched: number;
 
+  @Column({ type: 'varchar', length: 100 })
+  role: string;
+
+  @Column({
+    name: 'profile_picture',
+    type: 'varchar',
+    default: '',
+    nullable: true,
+  })
+  profilePicture?: string;
+
+  @Column({
+    type: 'uuid',
+    unique: true,
+    name: 'reset_password_token',
+    nullable: true,
+  })
+  resetPasswordToken: string;
+
   @CreateDateColumn({
     name: 'create_at',
     type: 'timestamp with time zone',
@@ -60,9 +72,11 @@ export class User {
   @Exclude()
   updateAt: Date;
 
-  @OneToOne(() => Score, (score) => score.user, { nullable: true })
-  @JoinColumn({ name: 'score_id' })
-  score: Score;
+  @OneToMany(() => Interaction, (interaction) => interaction.user, {
+    nullable: true,
+  })
+  @JoinColumn({ name: 'interaction_id' })
+  interactions: Interaction[];
 
   @ManyToOne(() => Movie, (movie) => movie.users)
   @JoinColumn({ name: 'movie_id' })

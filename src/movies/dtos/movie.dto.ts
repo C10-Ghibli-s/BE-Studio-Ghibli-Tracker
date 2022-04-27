@@ -5,14 +5,11 @@ import {
   IsPositive,
   IsNotEmpty,
   IsArray,
+  IsDecimal,
 } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class CreateMovieDto {
-  @IsString()
-  @ApiProperty()
-  readonly seenMark: string;
-
   @IsString()
   @IsUrl()
   @ApiProperty()
@@ -26,9 +23,23 @@ export class CreateMovieDto {
   @ApiProperty()
   readonly releaseDate: string;
 
+  @IsDecimal()
+  @ApiProperty()
+  readonly audienceScore: number;
+
+  @IsUrl()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly movieBanner: string;
+
   @IsPositive()
   @ApiProperty()
   readonly titleId: number;
+
+  @IsNotEmpty()
+  @ApiProperty()
+  @IsString()
+  readonly description: string;
 
   @ApiProperty()
   @IsNotEmpty()

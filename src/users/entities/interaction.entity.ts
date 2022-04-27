@@ -10,22 +10,25 @@ import {
 } from 'typeorm';
 
 import { User } from './user.entity';
-import { Movie } from './../../movies/entities/movie.entity';
+import { Movie } from '../../movies/entities/movie.entity';
 import { Exclude } from 'class-transformer';
 
-@Entity({ name: 'scores' })
-export class Score {
+@Entity({ name: 'interactions' })
+export class Interaction {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({
+    name: 'seen_mark',
+    type: 'boolean',
+  })
+  seenMark: boolean;
 
   @Column({ name: 'score_by_emoji', type: 'varchar' })
   scoreByEmoji: string;
 
   @Column({ name: 'score_by_star', type: 'decimal' })
   scoreByStar: number;
-
-  @Column({ name: 'audience_score', type: 'decimal' })
-  audienceScore: number;
 
   @CreateDateColumn({
     name: 'create_at',
@@ -43,10 +46,10 @@ export class Score {
   @Exclude()
   updateAt: Date;
 
-  @OneToOne(() => User, (user) => user.score)
+  @ManyToOne(() => User, (user) => user.interactions)
   user: User;
 
-  @ManyToOne(() => Movie, (movie) => movie.scores)
+  @ManyToOne(() => Movie, (movie) => movie.interactions)
   @JoinColumn({ name: 'movie_id' })
   movie: Movie;
 }

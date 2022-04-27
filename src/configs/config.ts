@@ -14,7 +14,12 @@ export default registerAs('config', () => {
       user: process.env.POSTGRES_USER,
       host: process.env.POSTGRES_HOST,
     },
+    faceAppId: process.env.APP_ID,
+    faceAppSec: process.env.APP_SECRET,
     apiKey: process.env.API_KEY,
     environment: process.env.ENVIRONMENT,
+    jwtSecret: process.env.JWT_SECRET,
+    twitterKey: process.env.TWITTER_CONSUMER_KEY,
+    twitterSecret: process.env.TWITTER_CONSUMER_SECRET,
   };
 });
