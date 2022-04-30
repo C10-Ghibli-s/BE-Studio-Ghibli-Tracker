@@ -74,5 +74,11 @@ As a mention in the *built with*, the project is deployed in herku's platform, t
 If you want to know more details about the functionality of each point of the API, take a look of this documentation.
 [Documentation of the API REST](https://studio-ghibli-c10-platzimaster.herokuapp.com/docs/).
 
+## Our Team!
+Without you, this would not be possible...
+- [Ivan //AreYouIvan](https://github.com/AreYouIvan)
+- [Liliana Restrepo //LilianaRestrepoTorres](https://github.com/LilianaRestrepoTorres)
+- [Guillermo //Hai5eDFM](https://github.com/Hai5edfm)
+
 ---
  [C10-Squad-Search-Engine]💚 Platzi Master
