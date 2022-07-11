@@ -23,6 +23,17 @@ export class InteractionsService {
     });
   }
 
+  async filter(id: number) {
+    return this.interactionRepo.find({
+      relations: ['movie'],
+      where: {
+        user: {
+          id: id,
+        },
+      },
+    });
+  }
+
   async getOne(id: number) {
     const score = await this.interactionRepo.findOne(id, {
       relations: ['movie'],

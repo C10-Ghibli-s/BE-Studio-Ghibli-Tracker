@@ -44,6 +44,15 @@ export class InteractionsController {
     return this.iteractionService.getOne(interactionsId);
   }
 
+  @Get('filter/:userId')
+  @ApiOperation({
+    summary: 'Shows all the interactions by User Id related with movies.',
+  })
+  @Roles(Role.ADMIN, Role.USER)
+  movieFilter(@Param('userId', ParseIntPipe) userId: number) {
+    return this.iteractionService.filter(userId);
+  }
+
   @Post()
   @Roles(Role.ADMIN, Role.USER)
   create(@Body() payload: CreateInteractionDto) {

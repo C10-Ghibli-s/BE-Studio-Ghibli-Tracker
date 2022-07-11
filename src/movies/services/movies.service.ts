@@ -19,7 +19,7 @@ export class MoviesService {
     @InjectRepository(Writer) private writerRepo: Repository<Writer>,
   ) {}
 
-  findAll() {
+  async findAll() {
     return this.movieRepo.find({
       relations: ['title'],
     });
